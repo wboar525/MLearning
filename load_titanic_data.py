@@ -9,7 +9,7 @@ def load_titanic_data():
     data["deck"]=data["deck"].cat.add_categories(["Unknown"])
     data["deck"]=data["deck"].fillna("Unknown")
     data['embark_town'] = data['embark_town'].fillna(data['embark_town'].mode()[0])
-    data['age'] = data['age'].fillna(data['age'].mean()[0])
+    data['age'] = data['age'].fillna(data['age'].mean())
     mean_adult_age = data[data["who"] != "child"]["age"].mean()
     data['age'] = data['age'].fillna(mean_adult_age)
     data_ohe = pd.get_dummies(data, dtype = int)

@@ -5,22 +5,25 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning)
 
 class TitanicModel:
     def __init__(self):
-        self.models = None
+        self.models = {}
         self.data = None
         self.scaler = None
         self.__load_data__()
 
     def train(self, model_type): #обучение модели
-        if model_type == 'Logistic Regression':
+        if model_type == 'LogisticRegression':
             model = LogisticRegression()
             param_grid = {
-                "penalty": ["l1", "l2", "elasticnet", "none"], "C": np.logspace(-4, 4, 20),
+                "penalty": ["l2", None], "C": np.logspace(-4, 4, 20),
                 "solver": ["newton-cg", "lbfgs", "liblinear", "sag", "saga"], "max_iter": [100, 200, 300, 500],
             }
-        elif model_type == 'MLP Classifier':
+        elif model_type == 'MLPClassifier':
             model = MLPClassifier()
             param_grid = {
                 'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 100)],
@@ -28,8 +31,8 @@ class TitanicModel:
                 "learning_rate": ["constant", "invscaling", "adaptive"],
             }
         clf = RandomizedSearchCV(model, param_grid, random_state=0, scoring = 'f1_micro')
-        search = clf.fit(self.data['x_scaled'], self.data['y'])
-        self.models[model_type] = search.best_estimator_
+        clf.fit(self.data['x_scaled'], self.data['y'])
+        self.models[model_type] = clf.best_estimator_
 
     def evaluate(self): #проверка насколько обученная модель хорошо обучилась
         pass
