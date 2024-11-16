@@ -20,5 +20,19 @@ def model_predict(model_type, input_data):
 print(check_status())
 print(train_model('LogisticRegression'))
 
-test_data = {'age': 50, "who": 'male'}
+test_data = {'age': 50, "who": 'man'}
 print(model_predict('LogisticRegression',test_data))
+test_data = {'age': 30, "who": 'woman'}
+print(model_predict('LogisticRegression',test_data))
+test_data = {"who": 'child'}
+print(model_predict('LogisticRegression',test_data))
+
+print(check_status())
+print(train_model('MLPClassifier'))
+test_data = {'age': 50, "who": 'man'}
+print(model_predict('MLPClassifier',test_data))
+test_data = {'age': 30, "who": 'woman'}
+print(model_predict('MLPClassifier',test_data))
+test_data = {"who": 'child'}
+print(model_predict('MLPClassifier',test_data))
+

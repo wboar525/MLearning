@@ -12,6 +12,11 @@ model = TitanicModel()
 class PredictRequest(BaseModel):
     age: Optional[float] = None
     who: Optional[str] = None
+    parch: Optional[int] = None
+    sibsp: Optional[int] = None
+    deck: Optional[str] = None
+    fare: Optional[float] = None
+    pclass: Optional[int] = None
 
 @app.get("/")
 def read_root():
@@ -29,7 +34,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
 @app.post('/train_model/{model_type}')
 def train_model(model_type):
     model.train(model_type)
-    return 'Train is started...'
+    return 'Train is ended...'
 
 @app.post('/predict/{model_type}')
 def predict(request: PredictRequest, model_type):
